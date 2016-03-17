@@ -1,6 +1,7 @@
 package com.theironyard.entities;
 
 import javax.persistence.*;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,7 +53,7 @@ public class HappyHour {
 
 
     @Column(nullable = false)
-    List<String> specials;
+    ArrayList<String> specials;
 
     @Column(nullable = false)
     String image;
@@ -61,7 +62,7 @@ public class HappyHour {
 
     }
 
-    public HappyHour(String name, String address, String city, String startTime, String endTime, boolean onMonday, boolean onTuesday, boolean onWednesday, boolean onThursday, boolean onFriday, boolean onSaturday, boolean onSunday, List<String> specials, String image) {
+    public HappyHour(String name, String address, String city, String startTime, String endTime, boolean onMonday, boolean onTuesday, boolean onWednesday, boolean onThursday, boolean onFriday, boolean onSaturday, boolean onSunday, ArrayList<String> specials, String image) {
         this.name = name;
         this.address = address;
         this.city = city;
@@ -186,7 +187,7 @@ public class HappyHour {
         return specials;
     }
 
-    public void setSpecials(List<String> specials) {
+    public void setSpecials(ArrayList<String> specials) {
         this.specials = specials;
     }
 
