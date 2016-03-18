@@ -1,9 +1,9 @@
 var Backbone = require('backbone');
 var $ = require('jquery');
 var _ = require('underscore');
-var tmpl = require('.templates');
+var tmpl = require('./templates');
 
-// model view
+////// Model View ///////
 
 module.exports = Backbone.View.extend({
   template: _.template(tmpl.post),
@@ -15,4 +15,4 @@ module.exports = Backbone.View.extend({
     this.$el.html(markup);
     return this;
   }
-}) 
+})

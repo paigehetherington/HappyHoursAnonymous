@@ -1,9 +1,140 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 var Backbone = require('backbone');
+var Model = require('./model');
+
+////// Happy Hour Collections ///////
+
+module.exports = Backbone.Collection.extend({
+  url: '/happy_hour',
+  initialize: function () {
+    console.log("HH COLLECTION FIRED");
+  }
+})
+
+},{"./model":5,"backbone":7}],2:[function(require,module,exports){
+var Backbone = require('backbone');
 var $ = require('jquery');
 var _ = require('underscore');
+var tmpl = require('./templates');
+var ModelView = require('./modelView')
 
-},{"backbone":2,"jquery":3,"underscore":4}],2:[function(require,module,exports){
+////// Collection View ///////
+
+module.exports = Backbone.View.extend({
+  el: '.content',
+  initalize: function(){
+    this.addAll();
+    this.listenTo(this.collection, 'update', this.addAll);
+  },
+  addOne: function(model){
+    var modelView = new ModelView({model: model});
+    this.$el.append(modelView.render().el);
+  },
+  addAll: function(){
+    _.each(this.collection.models, this.addOne, this);
+  }
+})
+
+},{"./modelView":6,"./templates":10,"backbone":7,"jquery":8,"underscore":9}],3:[function(require,module,exports){
+var Backbone = require('backbone');
+var $ = require('jquery');
+var _ = require('underscore');
+var tmpl = require('./templates');
+var Model = require('./model')
+
+////// Form View ///////
+
+module.exports = Backbone.View.extend ({
+
+  template: _.template(tmpl.create),
+  events: {
+    'click button': 'createPost',
+  },
+  createPost: function (event) {
+    event.preventDefault();
+    this.model.set({
+      address: this.$el.find('input[name="address"]').val(),
+      name: this.$el.find('input[name="name"]').val(),
+      city: this.$el.find('#cityPick').val(),
+      startTime: this.$el.find('input[name="startTime"]').val(),
+      endTime: this.$el.find('input[name="endTime"]').val(),
+      onMonday: this.$el.find('input[name="onMonday"]').attr("checked") ? 1 : 0,
+      onTuesday: this.$el.find('input[name="onTuesday"]').attr("checked") ? 1 : 0,
+      onWednesday: this.$el.find('input[name="onWednesday"]').attr("checked") ? 1 : 0,
+      onThursday: this.$el.find('input[name="onThursday"]').attr("checked") ? 1 : 0,
+      onFriday: this.$el.find('input[name="onFriday"]').attr("checked") ? 1 : 0,
+      onSaturday: this.$el.find('input[name="onSaturday"]').attr("checked") ? 1 : 0,
+      onSunday: this.$el.find('input[name="onSunday"]').attr("checked") ? 1 : 0,
+      image: this.$el.find('input[name="image"]').val(),
+      specials: this.$el.find('input[name="specials"]').val(),
+    });
+    this.model.save();
+    this.collection.add(this.model);
+    this.model = new Model({});
+  },
+  initialize: function () {
+    if(!this.model) {
+      this.model = new Model({});
+    }
+  },
+  render: function () {
+    var markup = this.template(this.model.toJSON());
+    this.$el.html(markup);
+    return this;
+  }
+})
+
+},{"./model":5,"./templates":10,"backbone":7,"jquery":8,"underscore":9}],4:[function(require,module,exports){
+var Backbone = require('backbone');
+var $ = require('jquery');
+var _ = require('underscore');
+var CollectionView = require('./collectionView');
+var FormView = require('./formView');
+var Collection = require('./collection');
+
+$(document).ready(function () {
+  var post = new Collection();
+  post.fetch().then(function (data) {
+    new CollectionView({collection: post});
+    var addForm = new FormView({collection: post});
+    $('.create').html(addForm.render().el);
+  });
+});
+
+},{"./collection":1,"./collectionView":2,"./formView":3,"backbone":7,"jquery":8,"underscore":9}],5:[function(require,module,exports){
+var Backbone = require('backbone');
+
+////// Happy Hour Model ///////
+
+module.exports = Backbone.Model.extend({
+  urlRoot: '/happy_hour',
+  idAttribute: 'id',
+  initialize: function () {
+    console.log("HH MODEL FIRED");
+  }
+})
+
+},{"backbone":7}],6:[function(require,module,exports){
+var Backbone = require('backbone');
+var $ = require('jquery');
+var _ = require('underscore');
+var tmpl = require('./templates');
+
+////// Model View ///////
+
+module.exports = Backbone.View.extend({
+  template: _.template(tmpl.post),
+  initalize: function(){
+    this.listenTo(this.model, 'change', this.render);
+  },
+  render: function(){
+    var markup = this.template(this.model.toJSON());
+    this.$el.html(markup);
+    return this;
+  }
+})
+
+},{"./templates":10,"backbone":7,"jquery":8,"underscore":9}],7:[function(require,module,exports){
 (function (global){
 //     Backbone.js 1.3.2
 
@@ -1927,7 +2058,7 @@ var _ = require('underscore');
 });
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"jquery":3,"underscore":4}],3:[function(require,module,exports){
+},{"jquery":8,"underscore":9}],8:[function(require,module,exports){
 /*!
  * jQuery JavaScript Library v2.2.2
  * http://jquery.com/
@@ -11771,7 +11902,7 @@ if ( !noGlobal ) {
 return jQuery;
 }));
 
-},{}],4:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 //     Underscore.js 1.8.3
 //     http://underscorejs.org
 //     (c) 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
@@ -13321,4 +13452,103 @@ return jQuery;
   }
 }.call(this));
 
-},{}]},{},[1]);
+},{}],10:[function(require,module,exports){
+module.exports = {
+  post: [
+    '<img src="<%= image %>" alt="" />',
+    '<h3><%= name %></h3>',
+    '<h5><%= address %></h5>',
+    '<h5><%= phone %></h5>',
+    '<p><span><%= onMonday %></span><span><%= onTuesday %></span><span><%= onWednesday %></span><span><%= onThursday %></span><span><%= onFriday %></span><span><%= onSaturday %></span><span><%= onSunday %></span></p>',
+    '<p><%= startTime %> to <%= endTime %></p>',
+    '<p><%= specials %></p>'
+  ].join(''),
+
+  create: [
+    '<form class="">',
+      '<h3>Add a Happy Hour!</h3>',
+      '<input placeholder="Restaurant Name"type="text" name="name" value="">',
+      '<input placeholder="Address"type="text" name="address" value="">',
+      '<input placeholder="Phone Number"type="text" name="phone" value="">',
+      '<select name="cityPick" id="cityPick">',
+        '<option value="void">-- Choose Neighborhood --</option>',
+        '<option value="downtown">Downtown</option>',
+        '<option value="mtPleasant">Mt. Pleasant</option>',
+        '<option value="westAshley">West Ashley</option>',
+        '<option value="parkCircle">Park Circle</option>',
+        '<option value="follyBeach">Folly Beach</option>',
+        '<option value="iop">Isle Of Palms</option>',
+        '<option value="sullivans">Sullivans Island</option>',
+        '<option value="summerville">Summerville</option>',
+        '<option value="jamesIsland">James Island</option>',
+      '</select>',
+      '<label for="startTime">Select a start time</label>',
+      '<input type="time" name="startTime">',
+      '<label for="endTime">Select an end time</label>',
+      '<input type="time" name="endTime">',
+      '<input type="checkbox" name="onMonday">',
+      '<label for="onMonday">Monday</label>',
+      '<input type="checkbox" name="onTuesday">',
+      '<label for="onTuesday">Tuesday</label>',
+      '<input type="checkbox" name="onWednesday">',
+      '<label for="onWednesday">Wednesday</label>',
+      '<input type="checkbox" name="onThursday">',
+      '<label for="onThursday">Thursday</label>',
+      '<input type="checkbox" name="onFriday">',
+      '<label for="onFriday">Friday</label>',
+      '<input type="checkbox" name="onSaturday">',
+      '<label for="onSaturday">Saturday</label>',
+      '<input type="checkbox" name="onSunday">',
+      '<label for="onSunday">Sunday</label>',
+      '<input placeholder="Happy Hour Speacials"type="text" name="specials" value="">',
+      '<input placeholder="Image"type="text" name="image" value="">',
+      '<button type="submit" name="create">SUBMIT</button>',
+    '</form>'
+  ].join(''),
+
+nameSearch: [
+  '<form class="">',
+    '<input type="text" name="name" placeholder="Search By Restaurant">',
+    '<button type="submit" name="search">Search</button>',
+  '</form>',
+
+].join(''),
+
+citySearch: [
+  '<select name="citySearch" id="citySearch">',
+    '<option value="void">-- Choose Neighborhood --</option>',
+    '<option value="downtown">Downtown</option>',
+    '<option value="mtPleasant">Mt. Pleasant</option>',
+    '<option value="westAshley">West Ashley</option>',
+    '<option value="parkCircle">Park Circle</option>',
+    '<option value="follyBeach">Folly Beach</option>',
+    '<option value="iop">Isle Of Palms</option>',
+    '<option value="sullivans">Sullivans Island</option>',
+    '<option value="summerville">Summerville</option>',
+    '<option value="jamesIsland">James Island</option>',
+  '</select>'
+].join('')
+}
+
+
+
+// '<form class="">',
+//   '<h3>Search for a Happy Hour!</h3>',
+//   '<input placeholder="Restaurant Name"type="text" name="name" value="">',
+//   '<input type="checkbox" name="onMonday">',
+//   '<label for="onMonday">Monday</label>',
+//   '<input type="checkbox" name="onTuesday">',
+//   '<label for="onTuesday">Tuesday</label>',
+//   '<input type="checkbox" name="onWednesday">',
+//   '<label for="onWednesday">Wednesday</label>',
+//   '<input type="checkbox" name="onThursday">',
+//   '<label for="onThursday">Thursday</label>',
+//   '<input type="checkbox" name="onFriday">',
+//   '<label for="onFriday">Friday</label>',
+//   '<input type="checkbox" name="onSaturday">',
+//   '<label for="onSaturday">Saturday</label>',
+//   '<input type="checkbox" name="onSunday">',
+//   '<label for="onSunday">Sunday</label>',
+// '</form>'
+
+},{}]},{},[4]);

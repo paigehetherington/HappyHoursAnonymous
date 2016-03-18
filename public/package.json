@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "serve": "cd ../ && java -jar JARFILENAMEHERE",
+    "serve": "cd ../ && java -jar HappyHoursAnonymous-0.0.1-SNAPSHOT.jar",
     "start": "npm run watch",
     "watch": "node_modules/.bin/node-sass styles.scss styles.css -w & node_modules/.bin/watchify main.js -o bundle.js",
     "test": "echo \"Error: no test specified\" && exit 1"
