@@ -54,6 +54,7 @@ public class HappyHoursAnonymousApplicationTests {
 		happyHour.setAddress("17 princess st");
 		happyHour.setName("Iron Yard");
 		happyHour.setCity("charleston");
+		happyHour.setPhone("3104528686");
 		happyHour.setEndTime("six");
 		happyHour.setStartTime("four");
 		happyHour.setOnMonday(false);
@@ -64,7 +65,7 @@ public class HappyHoursAnonymousApplicationTests {
 		happyHour.setOnSaturday(false);
 		happyHour.setOnSunday(false);
 		happyHour.setImage("img");
-		happyHour.setSpecials(new ArrayList<String>(Arrays.asList("beer", "chips")));
+		happyHour.setSpecials("beer and chips");
 
 		ObjectMapper mapper = new ObjectMapper();
 		String json = mapper.writeValueAsString(happyHour);
@@ -92,22 +93,24 @@ public class HappyHoursAnonymousApplicationTests {
 	//updateHappyHour
 	@Test
 	public void testB() throws Exception {
-		HappyHour happyHour = happyHours.findOne(1);
+		HappyHour happyHour = new HappyHour();
+		happyHour.setId(1);
 		happyHour.setAddress("17 princess st");
 		happyHour.setName("Iron Yard");
 		happyHour.setCity("charleston");
+		happyHour.setPhone("3104528686");
 		happyHour.setEndTime("seven");
 		happyHour.setStartTime("four");
 		happyHour.setOnFriday(true);
 		happyHour.setImage("img");
-		happyHour.setSpecials(new ArrayList<String>(Arrays.asList("beer", "chips")));
+		happyHour.setSpecials("beer and chips");
 
 		ObjectMapper mapper = new ObjectMapper();
 		String json = mapper.writeValueAsString(happyHour);
 
 
 		mockMvc.perform(
-				MockMvcRequestBuilders.put("/happy_hour/1")
+				MockMvcRequestBuilders.put("/happy_hour")
 				.content(json)
 				.contentType("application/json")
 		);
@@ -118,27 +121,34 @@ public class HappyHoursAnonymousApplicationTests {
 //
 
 
-//	@Test
-//	public void searchByCity() {
-//		HappyHour happyHour = new HappyHour();
-//		happyHour.setAddress("17 princess st");
-//		happyHour.setName("Iron Yard");
-//		happyHour.setCity("charleston");
-//		happyHour.setEndTime("six");
-//		happyHour.setStartTime("four");
-//		happyHour.setOnFriday(true);
-//		happyHour.setImage("img");
-//		happyHour.setSpecials(new ArrayList<String>(Arrays.asList("beer", "chips")));
-//		public List<HappyHour> searchByCity(@PathVariable"charleston", String city)
-//	}
+
+	//searchByCity
+	@Test
+	public void testC() {
+		HappyHour happyHour = new HappyHour();
+		happyHour.setAddress("17 princess st");
+		happyHour.setName("Iron Yard");
+		happyHour.setCity("charleston");
+		happyHour.setPhone("3104528686");
+		happyHour.setEndTime("six");
+		happyHour.setStartTime("four");
+		happyHour.setOnFriday(true);
+		happyHour.setImage("img");
+		happyHour.setSpecials("beer and chips");
+		happyHours.save(happyHour);
+		happyHours.save(new HappyHour("Rich's", "5 princess st", "atlanta", "55", "8", "7", true, false, false, false, false, false, false, "beer and chips", "img"));
+		happyHours.save(new HappyHour("Bob's", "5 princess st", "atlanta", "55", "8", "7", true, false, false, false, false, false, false, "beer and chips", "img"));
+
+		Assert.assertTrue(happyHours.findByCity("charleston").size() == 2);
+	}
 
 	//deleteHappyHour
 	@Test
-	public void testC() throws Exception {
+	public void testD() throws Exception {
 		mockMvc.perform(
 				MockMvcRequestBuilders.delete("/happy_hour/1")
 		);
-		Assert.assertTrue(happyHours.count() == 0);
+		Assert.assertTrue(happyHours.count() == 3);
 	}
 
 
