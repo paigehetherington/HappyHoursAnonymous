@@ -70,7 +70,7 @@ module.exports = Backbone.View.extend ({
       specials: this.$el.find('input[name="specials"]').val(),
     });
     console.log(this.model.attributes);
-    // this.model.save();
+    this.model.save();
     this.collection.add(this.model);
     this.model = new Model({});
   },
