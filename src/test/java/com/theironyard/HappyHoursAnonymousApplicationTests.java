@@ -142,9 +142,16 @@ public class HappyHoursAnonymousApplicationTests {
 		Assert.assertTrue(happyHours.findByCity("charleston").size() == 2);
 	}
 
+
+	//searchByName
+	@Test
+	public void testD() {
+		Assert.assertTrue(happyHours.findByName("Rich's").size() == 1);
+	}
+
 	//deleteHappyHour
 	@Test
-	public void testD() throws Exception {
+	public void testE() throws Exception {
 		mockMvc.perform(
 				MockMvcRequestBuilders.delete("/happy_hour/1")
 		);
