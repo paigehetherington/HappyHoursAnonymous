@@ -15,7 +15,6 @@ module.exports = Backbone.Collection.extend({
 var Backbone = require('backbone');
 var $ = require('jquery');
 var _ = require('underscore');
-var tmpl = require('./templates');
 var ModelView = require('./modelView')
 
 ////// Collection View ///////
@@ -25,6 +24,8 @@ module.exports = Backbone.View.extend({
   initalize: function(){
     this.addAll();
     this.listenTo(this.collection, 'update', this.addAll);
+    this.listenTo(this.collection, 'change', this.addAll);
+    this.listenTo(this.collection, 'add', this.addAll);
   },
   addOne: function(model){
     var modelView = new ModelView({model: model});
@@ -35,7 +36,7 @@ module.exports = Backbone.View.extend({
   }
 })
 
-},{"./modelView":6,"./templates":10,"backbone":7,"jquery":8,"underscore":9}],3:[function(require,module,exports){
+},{"./modelView":6,"backbone":7,"jquery":8,"underscore":9}],3:[function(require,module,exports){
 var Backbone = require('backbone');
 var $ = require('jquery');
 var _ = require('underscore');
@@ -58,17 +59,18 @@ module.exports = Backbone.View.extend ({
       city: this.$el.find('#cityPick').val(),
       startTime: this.$el.find('input[name="startTime"]').val(),
       endTime: this.$el.find('input[name="endTime"]').val(),
-      onMonday: this.$el.find('input[name="onMonday"]').attr("checked") ? 1 : 0,
-      onTuesday: this.$el.find('input[name="onTuesday"]').attr("checked") ? 1 : 0,
-      onWednesday: this.$el.find('input[name="onWednesday"]').attr("checked") ? 1 : 0,
-      onThursday: this.$el.find('input[name="onThursday"]').attr("checked") ? 1 : 0,
-      onFriday: this.$el.find('input[name="onFriday"]').attr("checked") ? 1 : 0,
-      onSaturday: this.$el.find('input[name="onSaturday"]').attr("checked") ? 1 : 0,
-      onSunday: this.$el.find('input[name="onSunday"]').attr("checked") ? 1 : 0,
+      onMonday: this.$el.find('input[name="onMonday"]')[0].checked,
+      onTuesday: this.$el.find('input[name="onTuesday"]')[0].checked,
+      onWednesday: this.$el.find('input[name="onWednesday"]')[0].checked,
+      onThursday: this.$el.find('input[name="onThursday"]')[0].checked,
+      onFriday: this.$el.find('input[name="onFriday"]')[0].checked,
+      onSaturday: this.$el.find('input[name="onSaturday"]')[0].checked,
+      onSunday: this.$el.find('input[name="onSunday"]')[0].checked,
       image: this.$el.find('input[name="image"]').val(),
       specials: this.$el.find('input[name="specials"]').val(),
     });
-    this.model.save();
+    console.log(this.model.attributes);
+    // this.model.save();
     this.collection.add(this.model);
     this.model = new Model({});
   },
@@ -108,7 +110,6 @@ var Backbone = require('backbone');
 
 module.exports = Backbone.Model.extend({
   urlRoot: '/happy_hour',
-  idAttribute: 'id',
   initialize: function () {
     console.log("HH MODEL FIRED");
   }
@@ -126,6 +127,8 @@ module.exports = Backbone.View.extend({
   template: _.template(tmpl.post),
   initalize: function(){
     this.listenTo(this.model, 'change', this.render);
+    this.listenTo(this.model, 'update', this.render);
+    this.listenTo(this.model, 'add', this.render);
   },
   render: function(){
     var markup = this.template(this.model.toJSON());

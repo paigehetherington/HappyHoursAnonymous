@@ -9,6 +9,8 @@ module.exports = Backbone.View.extend({
   template: _.template(tmpl.post),
   initalize: function(){
     this.listenTo(this.model, 'change', this.render);
+    this.listenTo(this.model, 'update', this.render);
+    this.listenTo(this.model, 'add', this.render);
   },
   render: function(){
     var markup = this.template(this.model.toJSON());
