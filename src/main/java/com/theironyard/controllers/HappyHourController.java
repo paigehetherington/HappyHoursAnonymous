@@ -27,13 +27,13 @@ public class HappyHourController {
         happyHours.save(happyHour);
     }
 
-    @RequestMapping(path = "/happy_hour/{id}", method = RequestMethod.PUT)
-    public void updateHappyHour(@RequestBody HappyHour happyHour, @PathVariable("id") int id) {
+    @RequestMapping(path = "/happy_hour", method = RequestMethod.PUT)
+    public void updateHappyHour(@RequestBody HappyHour happyHour) {
         happyHours.save(happyHour);
     }
 
     @RequestMapping(path = "/happy_hour/{id}", method = RequestMethod.DELETE)
-    public void deleteHappyHour(@RequestBody HappyHour happyHour, @PathVariable("id") int id) {
+    public void deleteHappyHour(@PathVariable("id") int id) {
         happyHours.delete(id);
     }
 

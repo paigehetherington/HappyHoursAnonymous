@@ -22,6 +22,9 @@ public class HappyHour {
     String address;
 
     @Column(nullable = false)
+    String phone;
+
+    @Column(nullable = false)
     String city;
 
     @Column(nullable = false)
@@ -53,7 +56,7 @@ public class HappyHour {
 
 
     @Column(nullable = false)
-    ArrayList<String> specials;
+    String specials;
 
     @Column(nullable = false)
     String image;
@@ -62,7 +65,7 @@ public class HappyHour {
 
     }
 
-    public HappyHour(String name, String address, String city, String startTime, String endTime, boolean onMonday, boolean onTuesday, boolean onWednesday, boolean onThursday, boolean onFriday, boolean onSaturday, boolean onSunday, ArrayList<String> specials, String image) {
+    public HappyHour(String name, String address, String city, String phone, String startTime, String endTime, boolean onMonday, boolean onTuesday, boolean onWednesday, boolean onThursday, boolean onFriday, boolean onSaturday, boolean onSunday, String specials, String image) {
         this.name = name;
         this.address = address;
         this.city = city;
@@ -77,6 +80,7 @@ public class HappyHour {
         this.onSunday = onSunday;
         this.specials = specials;
         this.image = image;
+        this.phone = phone;
     }
 
     public int getId() {
@@ -183,11 +187,11 @@ public class HappyHour {
         this.onSunday = onSunday;
     }
 
-    public List<String> getSpecials() {
+    public String getSpecials() {
         return specials;
     }
 
-    public void setSpecials(ArrayList<String> specials) {
+    public void setSpecials(String specials) {
         this.specials = specials;
     }
 
@@ -197,5 +201,13 @@ public class HappyHour {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }
