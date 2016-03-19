@@ -7,17 +7,19 @@ var ModelView = require('./modelView')
 
 module.exports = Backbone.View.extend({
   el: '.content',
-  initalize: function(){
+  initialize: function(){
+    console.log('helloooooooo')
     this.addAll();
+    // this.listenTo(this.collection, 'change', this.addAll);
     this.listenTo(this.collection, 'update', this.addAll);
-    this.listenTo(this.collection, 'change', this.addAll);
-    this.listenTo(this.collection, 'add', this.addAll);
   },
   addOne: function(model){
     var modelView = new ModelView({model: model});
+    console.log('HELLO,', modelView);
     this.$el.append(modelView.render().el);
   },
   addAll: function(){
+    this.$el.html('');
     _.each(this.collection.models, this.addOne, this);
   }
 })

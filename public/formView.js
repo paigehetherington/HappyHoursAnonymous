@@ -14,10 +14,11 @@ module.exports = Backbone.View.extend ({
   },
   createPost: function (event) {
     event.preventDefault();
-    this.model.set({
+    newPost = {
       address: this.$el.find('input[name="address"]').val(),
       name: this.$el.find('input[name="name"]').val(),
       city: this.$el.find('#cityPick').val(),
+      phone: this.$el.find('input[name="phone"]').val(),
       startTime: this.$el.find('input[name="startTime"]').val(),
       endTime: this.$el.find('input[name="endTime"]').val(),
       onMonday: this.$el.find('input[name="onMonday"]')[0].checked,
@@ -29,19 +30,19 @@ module.exports = Backbone.View.extend ({
       onSunday: this.$el.find('input[name="onSunday"]')[0].checked,
       image: this.$el.find('input[name="image"]').val(),
       specials: this.$el.find('input[name="specials"]').val(),
-    });
-    console.log(this.model.attributes);
-    this.model.save();
-    this.collection.add(this.model);
-    this.model = new Model({});
+    };
+    var newPostModel = new Model(newPost);
+    this.$el.find('input').val('');
+    this.$el.find('#cityPick').val('void');
+    newPostModel.save();
+    this.collection.add(newPostModel);
+    newPostModel = new Model({});
   },
   initialize: function () {
-    if(!this.model) {
-      this.model = new Model({});
-    }
+    this.$el.append(this.render());
   },
   render: function () {
-    var markup = this.template(this.model.toJSON());
+    var markup = this.template;
     this.$el.html(markup);
     return this;
   }
