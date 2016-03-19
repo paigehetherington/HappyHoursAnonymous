@@ -7,5 +7,8 @@ module.exports = Backbone.Collection.extend({
   url: '/happy_hour',
   initialize: function () {
     console.log("HH COLLECTION FIRED");
+  },
+  updateUrl: function (city) {
+  this.url = this.url + "/" + city
   }
 })

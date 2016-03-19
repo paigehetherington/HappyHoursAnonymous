@@ -9,6 +9,14 @@ var Model = require('./model')
 module.exports = Backbone.View.extend ({
 
   template: _.template(tmpl.create),
+  initialize: function () {
+    this.$el.append(this.render());
+  },
+  render: function () {
+    var markup = this.template;
+    this.$el.html(markup);
+    return this;
+  },
   events: {
     'click button': 'createPost',
   },
@@ -37,13 +45,5 @@ module.exports = Backbone.View.extend ({
     newPostModel.save();
     this.collection.add(newPostModel);
     newPostModel = new Model({});
-  },
-  initialize: function () {
-    this.$el.append(this.render());
-  },
-  render: function () {
-    var markup = this.template;
-    this.$el.html(markup);
-    return this;
   }
 })

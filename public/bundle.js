@@ -1,5 +1,99 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 var Backbone = require('backbone');
+var Model = require('./model');
+
+////// Happy Hour Collections ///////
+
+module.exports = Backbone.Collection.extend({
+  url: '/happy_hour',
+  initialize: function () {
+    console.log("HH COLLECTION FIRED");
+  },
+  updateUrl: function (city) {
+  this.url = this.url + "/" + city
+  }
+})
+
+},{"./model":5,"backbone":7}],2:[function(require,module,exports){
+var Backbone = require('backbone');
+var $ = require('jquery');
+var _ = require('underscore');
+var ModelView = require('./modelView')
+
+////// Collection View ///////
+
+module.exports = Backbone.View.extend({
+  el: '.content',
+  initialize: function(){
+    console.log('helloooooooo')
+    this.addAll();
+    // this.listenTo(this.collection, 'change', this.addAll);
+    this.listenTo(this.collection, 'update', this.addAll);
+  },
+  addOne: function(model){
+    var modelView = new ModelView({model: model});
+    console.log('HELLO,', modelView);
+    this.$el.append(modelView.render().el);
+  },
+  addAll: function(){
+    this.$el.html('');
+    _.each(this.collection.models, this.addOne, this);
+  }
+})
+
+},{"./modelView":6,"backbone":7,"jquery":8,"underscore":9}],3:[function(require,module,exports){
+var Backbone = require('backbone');
+var $ = require('jquery');
+var _ = require('underscore');
+var tmpl = require('./templates');
+var Model = require('./model')
+
+////// Form View ///////
+
+module.exports = Backbone.View.extend ({
+
+  template: _.template(tmpl.create),
+  initialize: function () {
+    this.$el.append(this.render());
+  },
+  render: function () {
+    var markup = this.template;
+    this.$el.html(markup);
+    return this;
+  },
+  events: {
+    'click button': 'createPost',
+  },
+  createPost: function (event) {
+    event.preventDefault();
+    newPost = {
+      address: this.$el.find('input[name="address"]').val(),
+      name: this.$el.find('input[name="name"]').val(),
+      city: this.$el.find('#cityPick').val(),
+      phone: this.$el.find('input[name="phone"]').val(),
+      startTime: this.$el.find('input[name="startTime"]').val(),
+      endTime: this.$el.find('input[name="endTime"]').val(),
+      onMonday: this.$el.find('input[name="onMonday"]')[0].checked,
+      onTuesday: this.$el.find('input[name="onTuesday"]')[0].checked,
+      onWednesday: this.$el.find('input[name="onWednesday"]')[0].checked,
+      onThursday: this.$el.find('input[name="onThursday"]')[0].checked,
+      onFriday: this.$el.find('input[name="onFriday"]')[0].checked,
+      onSaturday: this.$el.find('input[name="onSaturday"]')[0].checked,
+      onSunday: this.$el.find('input[name="onSunday"]')[0].checked,
+      image: this.$el.find('input[name="image"]').val(),
+      specials: this.$el.find('input[name="specials"]').val(),
+    };
+    var newPostModel = new Model(newPost);
+    this.$el.find('input').val('');
+    this.$el.find('#cityPick').val('void');
+    newPostModel.save();
+    this.collection.add(newPostModel);
+    newPostModel = new Model({});
+  }
+})
+
+},{"./model":5,"./templates":12,"backbone":7,"jquery":8,"underscore":9}],4:[function(require,module,exports){
+var Backbone = require('backbone');
 var $ = require('jquery');
 var Routes = require('./routes')
 
@@ -8,7 +102,48 @@ $(document).ready(function () {
   Backbone.history.start({pushstate: true});
 })
 
-},{"./routes":5,"backbone":2,"jquery":3}],2:[function(require,module,exports){
+},{"./routes":10,"backbone":7,"jquery":8}],5:[function(require,module,exports){
+var Backbone = require('backbone');
+
+////// Happy Hour Model ///////
+
+module.exports = Backbone.Model.extend({
+  urlRoot: '/happy_hour',
+  initialize: function () {
+    console.log("HH MODEL FIRED");
+  }
+})
+
+},{"backbone":7}],6:[function(require,module,exports){
+var Backbone = require('backbone');
+var $ = require('jquery');
+var _ = require('underscore');
+var tmpl = require('./templates');
+
+////// Model View ///////
+
+module.exports = Backbone.View.extend({
+  template: _.template(tmpl.post),
+  initalize: function(){
+    this.listenTo(this.model, 'change', this.render);
+    // this.listenTo(this.model, 'update', this.render);
+    // this.listenTo(this.model, 'add', this.render);
+  },
+  events: {
+    'click .delete': 'deletePost',
+  },
+  deletePost: function (event) {
+    event.preventDefault();
+    this.model.destroy();
+  },
+  render: function(){
+    var markup = this.template(this.model.toJSON());
+    this.$el.html(markup);
+    return this;
+  }
+})
+
+},{"./templates":12,"backbone":7,"jquery":8,"underscore":9}],7:[function(require,module,exports){
 (function (global){
 //     Backbone.js 1.3.2
 
@@ -1932,7 +2067,7 @@ $(document).ready(function () {
 });
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"jquery":3,"underscore":4}],3:[function(require,module,exports){
+},{"jquery":8,"underscore":9}],8:[function(require,module,exports){
 /*!
  * jQuery JavaScript Library v2.2.2
  * http://jquery.com/
@@ -11776,7 +11911,7 @@ if ( !noGlobal ) {
 return jQuery;
 }));
 
-},{}],4:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 //     Underscore.js 1.8.3
 //     http://underscorejs.org
 //     (c) 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
@@ -13326,7 +13461,213 @@ return jQuery;
   }
 }.call(this));
 
-},{}],5:[function(require,module,exports){
-routes.js
+},{}],10:[function(require,module,exports){
+var Backbone = require('backbone');
+var $ = require('jquery');
+var _ = require('underscore');
+var CollectionView = require('./collectionView');
+var FormView = require('./formView');
+var Collection = require('./collection');
+var SearchView = require('./searchView');
 
-},{}]},{},[1]);
+module.exports = Backbone.Router.extend({
+  subview: null,
+  routes: {
+    '': 'home',
+    'home': 'home',
+  },
+  home: function () {
+    var post = new Collection();
+    post.fetch().then(function (data) {
+      var colView = new CollectionView({collection: post});
+      var addForm = new FormView({collection: post});
+      var searchForm = new SearchView({collection: post});
+      $('.create').html(addForm.render().el);
+      $('.search').html(searchForm.render().el);
+    });
+  },
+  renderSubview: function (subview) {
+    this.subview && this.subview.remove();
+    this.subview = subview;
+  }
+})
+
+
+// var that = this; //constructor context
+// var bitterCol = new BitterCollection();
+// var bitFormView = new FormView({collection: bitterCol});
+//
+// bitterCol.fetch().then(function (data) {
+//   var collection = new BitterCollection(data);
+//   that.renderSubview(new BitterCollectionView({collection: collection}));
+// });
+// },
+
+// //
+// $(document).ready(function () {
+//   var post = new Collection();
+//   post.fetch().then(function (data) {
+//     var colView = new CollectionView({collection: post});
+//     var addForm = new FormView({collection: post});
+//     var searchForm = new SearchView({collection: post});
+//     $('.create').html(addForm.render().el);
+//     $('.search').html(searchForm.render().el);
+//   });
+// });
+
+},{"./collection":1,"./collectionView":2,"./formView":3,"./searchView":11,"backbone":7,"jquery":8,"underscore":9}],11:[function(require,module,exports){
+var Backbone = require('backbone');
+var $ = require('jquery');
+var _ = require('underscore');
+var tmpl = require('./templates');
+var Model = require('./model')
+
+////// Search View ///////
+
+module.exports = Backbone.View.extend ({
+
+  template: _.template(tmpl.citySearch),
+  events: {
+    'click h3': 'citySearch'
+  },
+  citySearch: function (event) {
+    event.preventDefault();
+    console.log($(event.target).data("city"));
+    var that = this
+    console.log(this);
+    var city = $(event.target).data("city");
+    this.collection.updateUrl(city);
+    this.collection.fetch()
+  },
+  initialize: function () {
+    this.listenTo(this.collection, 'update', this.addAll);
+    this.$el.append(this.render());
+  },
+  render: function () {
+    var markup = this.template;
+    this.$el.html(markup);
+    return this;
+  }
+})
+
+},{"./model":5,"./templates":12,"backbone":7,"jquery":8,"underscore":9}],12:[function(require,module,exports){
+module.exports = {
+  post: [
+    '<img src="<%= image %>" alt="" />',
+    '<h3><%= name %></h3>',
+    '<h5><%= address %></h5>',
+    '<h5><%= phone %></h5>',
+    '<% if(onMonday) { %>',
+    '<span>M </span>',
+    '<% } %>',
+    '<% if(onTuesday) { %>',
+    '<span>Tu </span>',
+    '<% } %>',
+    '<% if(onWednesday) { %>',
+    '<span>W </span>',
+    '<% } %>',
+    '<% if(onThursday) { %>',
+    '<span>Th </span>',
+    '<% } %>',
+    '<% if(onFriday) { %>',
+    '<span>F </span>',
+    '<% } %>',
+    '<% if(onSaturday) { %>',
+    '<span>Sa </span>',
+    '<% } %>',
+    '<% if(onSunday) { %>',
+    '<span>Su </span>',
+    '<% } %>',
+    '<p><%= startTime %> to <%= endTime %></p>',
+    '<p><%= specials %></p>',
+    '<button class="delete">DELETE</button>'
+  ].join(''),
+
+  create: [
+    '<form class="">',
+      '<h3>Add a Happy Hour!</h3>',
+      '<input placeholder="Restaurant Name"type="text" name="name" value="">',
+      '<input placeholder="Address"type="text" name="address" value="">',
+      '<input placeholder="Phone Number"type="text" name="phone" value="">',
+      '<select name="cityPick" id="cityPick">',
+        '<option value="void">-- Choose Neighborhood --</option>',
+        '<option value="downtown">Downtown</option>',
+        '<option value="mtPleasant">Mt. Pleasant</option>',
+        '<option value="westAshley">West Ashley</option>',
+        '<option value="parkCircle">Park Circle</option>',
+        '<option value="follyBeach">Folly Beach</option>',
+        '<option value="iop">Isle Of Palms</option>',
+        '<option value="sullivans">Sullivans Island</option>',
+        '<option value="summerville">Summerville</option>',
+        '<option value="jamesIsland">James Island</option>',
+      '</select>',
+      '<label for="startTime">Select a start time</label>',
+      '<input type="text" name="startTime">',
+      '<label for="endTime">Select an end time</label>',
+      '<input type="text" name="endTime">',
+      '<input type="checkbox" name="onMonday">',
+      '<label for="onMonday">Monday</label>',
+      '<input type="checkbox" name="onTuesday">',
+      '<label for="onTuesday">Tuesday</label>',
+      '<input type="checkbox" name="onWednesday">',
+      '<label for="onWednesday">Wednesday</label>',
+      '<input type="checkbox" name="onThursday">',
+      '<label for="onThursday">Thursday</label>',
+      '<input type="checkbox" name="onFriday">',
+      '<label for="onFriday">Friday</label>',
+      '<input type="checkbox" name="onSaturday">',
+      '<label for="onSaturday">Saturday</label>',
+      '<input type="checkbox" name="onSunday">',
+      '<label for="onSunday">Sunday</label>',
+      '<input placeholder="Happy Hour Speacials"type="text" name="specials" value="">',
+      '<input placeholder="Image"type="text" name="image" value="">',
+      '<button type="submit" name="create">SUBMIT</button>',
+    '</form>'
+  ].join(''),
+
+nameSearch: [
+  '<form class="">',
+    '<input type="text" name="name" placeholder="Search By Restaurant">',
+    '<button type="submit" name="search">Search</button>',
+  '</form>',
+
+].join(''),
+
+citySearch: [
+  '<div name="citySearch" id="citySearch">',
+    '<h3 data-city="downtown">Downtown</h3>',
+    '<h3 data-city="mtPleasant">Mt. Pleasant</h3>',
+    '<h3 data-city="westAshley">West Ashley</h3>',
+    '<h3 data-city="parkCircle">Park Circle</h3>',
+    '<h3 data-city="follyBeach">Folly Beach</h3>',
+    '<h3 data-city="iop">Isle Of Palms</h3>',
+    '<h3 data-city="sullivans">Sullivans Island</h3>',
+    '<h3 data-city="summerville">Summerville</h3>',
+    '<h3 data-city="jamesIsland">James Island</h3>',
+  '</div>'
+].join('')
+}
+
+
+
+
+// '<form class="">',
+//   '<h3>Search for a Happy Hour!</h3>',
+//   '<input placeholder="Restaurant Name"type="text" name="name" value="">',
+//   '<input type="checkbox" name="onMonday">',
+//   '<label for="onMonday">Monday</label>',
+//   '<input type="checkbox" name="onTuesday">',
+//   '<label for="onTuesday">Tuesday</label>',
+//   '<input type="checkbox" name="onWednesday">',
+//   '<label for="onWednesday">Wednesday</label>',
+//   '<input type="checkbox" name="onThursday">',
+//   '<label for="onThursday">Thursday</label>',
+//   '<input type="checkbox" name="onFriday">',
+//   '<label for="onFriday">Friday</label>',
+//   '<input type="checkbox" name="onSaturday">',
+//   '<label for="onSaturday">Saturday</label>',
+//   '<input type="checkbox" name="onSunday">',
+//   '<label for="onSunday">Sunday</label>',
+// '</form>'
+
+},{}]},{},[4]);

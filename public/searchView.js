@@ -18,13 +18,8 @@ module.exports = Backbone.View.extend ({
     var that = this
     console.log(this);
     var city = $(event.target).data("city");
-    console.log("THIS IS THE CITY", city);
-    filtered = this.collection.models.filter(function (el) {
-          console.log(el);
-          console.log(el.attributes.city);
-          return el.attributes.city === city;
-    });
-    console.log("FILTERED VARIABLE", filtered);
+    this.collection.updateUrl(city);
+    this.collection.fetch()
   },
   initialize: function () {
     this.listenTo(this.collection, 'update', this.addAll);
