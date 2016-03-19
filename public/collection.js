@@ -9,6 +9,6 @@ module.exports = Backbone.Collection.extend({
     console.log("HH COLLECTION FIRED");
   },
   updateUrl: function (city) {
-  this.url = this.url + "/" + city
+  this.url = "/happy_hour/city/" + city
   }
 })
