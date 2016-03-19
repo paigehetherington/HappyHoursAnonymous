@@ -9,39 +9,41 @@ var Model = require('./model')
 module.exports = Backbone.View.extend ({
 
   template: _.template(tmpl.create),
+  initialize: function () {
+    this.$el.append(this.render());
+  },
+  render: function () {
+    var markup = this.template;
+    this.$el.html(markup);
+    return this;
+  },
   events: {
     'click button': 'createPost',
   },
   createPost: function (event) {
     event.preventDefault();
-    this.model.set({
+    newPost = {
       address: this.$el.find('input[name="address"]').val(),
       name: this.$el.find('input[name="name"]').val(),
       city: this.$el.find('#cityPick').val(),
+      phone: this.$el.find('input[name="phone"]').val(),
       startTime: this.$el.find('input[name="startTime"]').val(),
       endTime: this.$el.find('input[name="endTime"]').val(),
-      onMonday: this.$el.find('input[name="onMonday"]').attr("checked") ? 1 : 0,
-      onTuesday: this.$el.find('input[name="onTuesday"]').attr("checked") ? 1 : 0,
-      onWednesday: this.$el.find('input[name="onWednesday"]').attr("checked") ? 1 : 0,
-      onThursday: this.$el.find('input[name="onThursday"]').attr("checked") ? 1 : 0,
-      onFriday: this.$el.find('input[name="onFriday"]').attr("checked") ? 1 : 0,
-      onSaturday: this.$el.find('input[name="onSaturday"]').attr("checked") ? 1 : 0,
-      onSunday: this.$el.find('input[name="onSunday"]').attr("checked") ? 1 : 0,
+      onMonday: this.$el.find('input[name="onMonday"]')[0].checked,
+      onTuesday: this.$el.find('input[name="onTuesday"]')[0].checked,
+      onWednesday: this.$el.find('input[name="onWednesday"]')[0].checked,
+      onThursday: this.$el.find('input[name="onThursday"]')[0].checked,
+      onFriday: this.$el.find('input[name="onFriday"]')[0].checked,
+      onSaturday: this.$el.find('input[name="onSaturday"]')[0].checked,
+      onSunday: this.$el.find('input[name="onSunday"]')[0].checked,
       image: this.$el.find('input[name="image"]').val(),
       specials: this.$el.find('input[name="specials"]').val(),
-    });
-    this.model.save();
-    this.collection.add(this.model);
-    this.model = new Model({});
-  },
-  initialize: function () {
-    if(!this.model) {
-      this.model = new Model({});
-    }
-  },
-  render: function () {
-    var markup = this.template(this.model.toJSON());
-    this.$el.html(markup);
-    return this;
+    };
+    var newPostModel = new Model(newPost);
+    this.$el.find('input').val('');
+    this.$el.find('#cityPick').val('void');
+    newPostModel.save();
+    this.collection.add(newPostModel);
+    newPostModel = new Model({});
   }
 })

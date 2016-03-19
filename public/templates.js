@@ -4,9 +4,30 @@ module.exports = {
     '<h3><%= name %></h3>',
     '<h5><%= address %></h5>',
     '<h5><%= phone %></h5>',
-    '<p><span><%= onMonday %></span><span><%= onTuesday %></span><span><%= onWednesday %></span><span><%= onThursday %></span><span><%= onFriday %></span><span><%= onSaturday %></span><span><%= onSunday %></span></p>',
+    '<% if(onMonday) { %>',
+    '<span>M </span>',
+    '<% } %>',
+    '<% if(onTuesday) { %>',
+    '<span>Tu </span>',
+    '<% } %>',
+    '<% if(onWednesday) { %>',
+    '<span>W </span>',
+    '<% } %>',
+    '<% if(onThursday) { %>',
+    '<span>Th </span>',
+    '<% } %>',
+    '<% if(onFriday) { %>',
+    '<span>F </span>',
+    '<% } %>',
+    '<% if(onSaturday) { %>',
+    '<span>Sa </span>',
+    '<% } %>',
+    '<% if(onSunday) { %>',
+    '<span>Su </span>',
+    '<% } %>',
     '<p><%= startTime %> to <%= endTime %></p>',
-    '<p><%= specials %></p>'
+    '<p><%= specials %></p>',
+    '<button class="delete">DELETE</button>'
   ].join(''),
 
   create: [
@@ -28,9 +49,9 @@ module.exports = {
         '<option value="jamesIsland">James Island</option>',
       '</select>',
       '<label for="startTime">Select a start time</label>',
-      '<input type="time" name="startTime">',
+      '<input type="text" name="startTime">',
       '<label for="endTime">Select an end time</label>',
-      '<input type="time" name="endTime">',
+      '<input type="text" name="endTime">',
       '<input type="checkbox" name="onMonday">',
       '<label for="onMonday">Monday</label>',
       '<input type="checkbox" name="onTuesday">',
@@ -60,20 +81,20 @@ nameSearch: [
 ].join(''),
 
 citySearch: [
-  '<select name="citySearch" id="citySearch">',
-    '<option value="void">-- Choose Neighborhood --</option>',
-    '<option value="downtown">Downtown</option>',
-    '<option value="mtPleasant">Mt. Pleasant</option>',
-    '<option value="westAshley">West Ashley</option>',
-    '<option value="parkCircle">Park Circle</option>',
-    '<option value="follyBeach">Folly Beach</option>',
-    '<option value="iop">Isle Of Palms</option>',
-    '<option value="sullivans">Sullivans Island</option>',
-    '<option value="summerville">Summerville</option>',
-    '<option value="jamesIsland">James Island</option>',
-  '</select>'
+  '<div name="citySearch" id="citySearch">',
+    '<h3 data-city="downtown">Downtown</h3>',
+    '<h3 data-city="mtPleasant">Mt. Pleasant</h3>',
+    '<h3 data-city="westAshley">West Ashley</h3>',
+    '<h3 data-city="parkCircle">Park Circle</h3>',
+    '<h3 data-city="follyBeach">Folly Beach</h3>',
+    '<h3 data-city="iop">Isle Of Palms</h3>',
+    '<h3 data-city="sullivans">Sullivans Island</h3>',
+    '<h3 data-city="summerville">Summerville</h3>',
+    '<h3 data-city="jamesIsland">James Island</h3>',
+  '</div>'
 ].join('')
 }
+
 
 
 
