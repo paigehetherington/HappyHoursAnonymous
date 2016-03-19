@@ -47,12 +47,12 @@ public class HappyHourController {
 //        return (List<HappyHour>) happyHours.findByOnMonday(true);
 //    }
 
-    @RequestMapping(path = "/happy_hour/{city}", method = RequestMethod.GET)
+    @RequestMapping(path = "/happy_hour/city/{city}", method = RequestMethod.GET)
     public List<HappyHour> searchByCity(@PathVariable("city") String city) {
         return happyHours.findByCity(city);
     }
 
-    @RequestMapping(path = "/happy_hour/{name}", method = RequestMethod.GET)
+    @RequestMapping(path = "/happy_hour/name/{name}", method = RequestMethod.GET)
     public List<HappyHour> searchByName(@PathVariable("name") String name) {
         return happyHours.findByName(name);
     }
