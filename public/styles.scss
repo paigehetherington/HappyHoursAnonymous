@@ -4,6 +4,18 @@ $blue: #7E7F9A;
 $red: #EB9486;
 $black: #272838;
 
+* {
+  color: $black;
+  background-color: $white;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+// .row {
+//   display: flex;
+//   flex-wrap: wrap;
+// }
+
 header {
   position: relative;
   background-image: url(https://drscdn.500px.org/photo/4116933/q%3D80_m%3D1500/54a28153694cbf949dc3d925e78c4ecc);
@@ -22,7 +34,8 @@ header {
 }
 
 header h1 {
-  color: $red;
+  color: $white;
+  background-color: transparent;
   text-align: center;
   margin: 0 auto;
   margin-top: 30px;
@@ -30,52 +43,75 @@ header h1 {
   font-size: 3.2em;
 }
 
-.btn.btn-lg {
-  border-radius: 10px !important;
-  margin-bottom: 10px !important;
+.icon {
+  overflow: hidden;
+  border-radius: 3px;
+  padding-left:0;
 }
 
-.btn-default {
-  background-color: $blue;
-  color: $red;
+.iconImg {
+  height: 100px;
 }
 
-.btn-default:hover {
-  background-color: $red;
-  color: $blue;
+.post {
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 20px;
+  margin-top:30px;
 }
 
-.form-control {
-  color: $red !important;
+.info {
+  padding: 0;
+  h3 {
+    margin-top: 0;
+  }
 }
+// .btn.btn-lg {
+//   border-radius: 10px !important;
+//   margin-bottom: 10px !important;
+// }
+//
+// .btn-default {
+//   background-color: $blue;
+//   color: $red;
+// }
+//
+// .btn-default:hover {
+//   background-color: $red;
+//   color: $blue;
+// }
+
+// .form-control {
+//   color: $white !important;
+// }
 
 label {
-  color: $red;
+  // color: $red;
   font-size: 1.2em;
 }
 
 input {
-  margin-top: 8px;
-  margin-bottom: 8px;
-  background-color: $blue;
-  border-radius: 10px;
+  // margin-top: 8px;
+  // margin-bottom: 8px;
+  background-color: $white;
+  // border-radius: 10px;
 }
 
-input[type="text"], textarea {
-  color: $red;
-  background-color : $blue;
-  height: 50px;
-}
+// input[type="text"], textarea {
+//   color: $red;
+//   background-color : $blue;
+//   height: 50px;
+// }
 
-::-webkit-input-placeholder {
- font-size: 14px;
- color: $red !important;
- text-transform: uppercase;
- text-align: center;
- font-weight: bold;
-}
+// ::-webkit-input-placeholder {
+//  font-size: 14px;
+//  color: $red !important;
+//  text-transform: uppercase;
+//  text-align: center;
+//  font-weight: bold;
+// }
 
-button {
-  color: $red;
-  background-color: $blue;
-}
+// button {
+//   color: $red;
+//   background-color: $blue;
+// }

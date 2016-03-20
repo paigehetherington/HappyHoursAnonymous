@@ -1,0 +1,81 @@
+$white: #F9F8F8;
+$blueLight: rgba(126, 127, 154, 0.4);
+$blue: #7E7F9A;
+$red: #EB9486;
+$black: #272838;
+
+header {
+  position: relative;
+  background-image: url(https://drscdn.500px.org/photo/4116933/q%3D80_m%3D1500/54a28153694cbf949dc3d925e78c4ecc);
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
+  height: 350px;
+  background-position-y: -100px;
+}
+
+.blue {
+  background-color: $blueLight;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+header h1 {
+  color: $red;
+  text-align: center;
+  margin: 0 auto;
+  margin-top: 30px;
+  margin-left: -53px;
+  font-size: 3.2em;
+}
+
+.btn.btn-lg {
+  border-radius: 10px !important;
+  margin-bottom: 10px !important;
+}
+
+.btn-default {
+  background-color: $blue;
+  color: $red;
+}
+
+.btn-default:hover {
+  background-color: $red;
+  color: $blue;
+}
+
+.form-control {
+  color: $red !important;
+}
+
+label {
+  color: $red;
+  font-size: 1.2em;
+}
+
+input {
+  margin-top: 8px;
+  margin-bottom: 8px;
+  background-color: $blue;
+  border-radius: 10px;
+}
+
+input[type="text"], textarea {
+  color: $red;
+  background-color : $blue;
+  height: 50px;
+}
+
+::-webkit-input-placeholder {
+ font-size: 14px;
+ color: $red !important;
+ text-transform: uppercase;
+ text-align: center;
+ font-weight: bold;
+}
+
+button {
+  color: $red;
+  background-color: $blue;
+}

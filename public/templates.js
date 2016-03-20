@@ -1,6 +1,7 @@
 module.exports = {
   post: [
-    '<img src="<%= image %>" alt="" />',
+    '<div class=" post col-md-12">',
+    '<div class =" info col-md-6">',
     '<h3><%= name %></h3>',
     '<h5><%= address %></h5>',
     '<h5><%= phone %></h5>',
@@ -25,9 +26,16 @@ module.exports = {
     '<% if(onSunday) { %>',
     '<span>Su </span>',
     '<% } %>',
+    '</div>',
+    '<div class="icon col-md-6">',
+    '<img class="iconImg" src="<%= image %>" alt="" />',
+    '</div>',
+    '<div class="info col-md-12">',
     '<p><%= startTime %> to <%= endTime %></p>',
     '<p><%= specials %></p>',
-    '<button class="delete">DELETE</button>'
+    '<button class="delete btn btn-default btn-sm" role="button"">DELETE</button>',
+    '</div>',
+    '</div>'
   ].join(''),
 
   create: [
@@ -75,7 +83,7 @@ module.exports = {
       '</div>',
       '<input class="form-control" placeholder="Happy Hour Speacials"type="text" name="specials" value="">',
       '<input class="form-control" placeholder="Image"type="text" name="image" value="">',
-      '<button type="submit" name="create">SUBMIT</button>',
+      '<button class="btn btn-default btn-md" role="button" type="submit" name="create">SUBMIT</button>',
     '</form>'
   ].join(''),
 
