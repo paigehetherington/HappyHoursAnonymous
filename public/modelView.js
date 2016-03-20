@@ -7,6 +7,7 @@ var tmpl = require('./templates');
 
 module.exports = Backbone.View.extend({
   template: _.template(tmpl.post),
+  className: 'col-md-6',
   initalize: function(){
     this.listenTo(this.model, 'change', this.render);
     // this.listenTo(this.model, 'update', this.render);

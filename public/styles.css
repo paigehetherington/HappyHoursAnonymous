@@ -1,3 +1,10 @@
+* {
+  color: #272838;
+  background-color: #F9F8F8;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0; }
+
 header {
   position: relative;
   background-image: url(https://drscdn.500px.org/photo/4116933/q%3D80_m%3D1500/54a28153694cbf949dc3d925e78c4ecc);
@@ -14,50 +21,35 @@ header {
   height: 100%; }
 
 header h1 {
-  color: #EB9486;
+  color: #F9F8F8;
+  background-color: transparent;
   text-align: center;
   margin: 0 auto;
   margin-top: 30px;
   margin-left: -53px;
   font-size: 3.2em; }
 
-.btn.btn-lg {
-  border-radius: 10px !important;
-  margin-bottom: 10px !important; }
+.icon {
+  overflow: hidden;
+  border-radius: 3px;
+  padding-left: 0; }
 
-.btn-default {
-  background-color: #7E7F9A;
-  color: #EB9486; }
+.iconImg {
+  height: 100px; }
 
-.btn-default:hover {
-  background-color: #EB9486;
-  color: #7E7F9A; }
+.post {
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 20px;
+  margin-top: 30px; }
 
-.form-control {
-  color: #EB9486 !important; }
+.info {
+  padding: 0; }
+  .info h3 {
+    margin-top: 0; }
 
 label {
-  color: #EB9486;
   font-size: 1.2em; }
 
 input {
-  margin-top: 8px;
-  margin-bottom: 8px;
-  background-color: #7E7F9A;
-  border-radius: 10px; }
-
-input[type="text"], textarea {
-  color: #EB9486;
-  background-color: #7E7F9A;
-  height: 50px; }
-
-::-webkit-input-placeholder {
-  font-size: 14px;
-  color: #EB9486 !important;
-  text-transform: uppercase;
-  text-align: center;
-  font-weight: bold; }
-
-button {
-  color: #EB9486;
-  background-color: #7E7F9A; }
+  background-color: #F9F8F8; }
