@@ -11,6 +11,9 @@ module.exports = Backbone.Collection.extend({
   },
   updateUrl: function (city) {
   this.url = "/happy_hour/city/" + city
+  },
+  allUrl: function () {
+    this.url = "/happy_hour";
   }
 })
 
@@ -13527,16 +13530,21 @@ module.exports = Backbone.View.extend ({
 
   template: _.template(tmpl.citySearch),
   events: {
-    'click h3': 'citySearch'
+    'click div': 'citySearch'
   },
   citySearch: function (event) {
+    $('div').removeClass('clicked');
+    $(event.target).addClass('clicked');
     event.preventDefault();
-    console.log($(event.target).data("city"));
-    var that = this
-    console.log(this);
     var city = $(event.target).data("city");
+    if (city === "all") {
+      console.log("ALL FIRED");
+      this.collection.allUrl();
+      this.collection.fetch();
+    } else {
     this.collection.updateUrl(city);
-    this.collection.fetch()
+    this.collection.fetch();
+    }
   },
   initialize: function () {
     this.listenTo(this.collection, 'update', this.addAll);
@@ -13610,8 +13618,8 @@ module.exports = {
         '<option value="jamesIsland">James Island</option>',
       '</select>',
       '</div>',
-      '<input class="form-control" placeholder="Select a start time" type="text" name="startTime">',
-      '<input class="form-control" placeholder="Select an end time" type="text" name="endTime">',
+      '<input class="form-control" placeholder="Start time" type="text" name="startTime">',
+      '<input class="form-control" placeholder="End time" type="text" name="endTime">',
       '<div class="checkbox">',
       '<label><input type="checkbox" name="onMonday">Monday</label>',
       '</div>',
@@ -13649,16 +13657,17 @@ nameSearch: [
 
 // citySearch with bootsrtap included
 citySearch: [
-  '<div class="citySearch btn-group-vertical" role="group" arial-label>',
-    '<h3 class="btn btn-default btn-lg" role="button" data-city="downtown">Downtown</h3>',
-    '<h3 class="btn btn-default btn-lg" role="button" data-city="mtPleasant">Mt. Pleasant</h3>',
-    '<h3 class="btn btn-default btn-lg" role="button" data-city="westAshley">West Ashley</h3>',
-    '<h3 class="btn btn-default btn-lg" role="button" data-city="parkCircle">Park Circle</h3>',
-    '<h3 class="btn btn-default btn-lg" role="button" data-city="follyBeach">Folly Beach</h3>',
-    '<h3 class="btn btn-default btn-lg" role="button" data-city="iop">Isle Of Palms</h3>',
-    '<h3 class="btn btn-default btn-lg" role="button" data-city="sullivans">Sullivans Island</h3>',
-    '<h3 class="btn btn-default btn-lg" role="button" data-city="summerville">Summerville</h3>',
-    '<h3 class="btn btn-default btn-lg" role="button" data-city="jamesIsland">James Island</h3>',
+  '<div class="citySearch" role="group" arial-label>',
+    '<div class="clicked" data-city="all">All</div>',
+    '<div data-city="downtown">Downtown</div>',
+    '<div data-city="mtPleasant">Mt. Pleasant</div>',
+    '<div data-city="westAshley">West Ashley</div>',
+    '<div data-city="parkCircle">Park Circle</div>',
+    '<div data-city="follyBeach">Folly Beach</div>',
+    '<div data-city="iop">Isle Of Palms</div>',
+    '<div data-city="sullivans">Sullivans Island</div>',
+    '<div data-city="summerville">Summerville</div>',
+    '<div data-city="jamesIsland">James Island</div>',
   '</div>'
 ].join(''),
 }

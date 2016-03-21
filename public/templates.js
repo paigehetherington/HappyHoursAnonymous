@@ -58,8 +58,8 @@ module.exports = {
         '<option value="jamesIsland">James Island</option>',
       '</select>',
       '</div>',
-      '<input class="form-control" placeholder="Select a start time" type="text" name="startTime">',
-      '<input class="form-control" placeholder="Select an end time" type="text" name="endTime">',
+      '<input class="form-control" placeholder="Start time" type="text" name="startTime">',
+      '<input class="form-control" placeholder="End time" type="text" name="endTime">',
       '<div class="checkbox">',
       '<label><input type="checkbox" name="onMonday">Monday</label>',
       '</div>',
@@ -97,16 +97,17 @@ nameSearch: [
 
 // citySearch with bootsrtap included
 citySearch: [
-  '<div class="citySearch btn-group-vertical" role="group" arial-label>',
-    '<h3 class="btn btn-default btn-lg" role="button" data-city="downtown">Downtown</h3>',
-    '<h3 class="btn btn-default btn-lg" role="button" data-city="mtPleasant">Mt. Pleasant</h3>',
-    '<h3 class="btn btn-default btn-lg" role="button" data-city="westAshley">West Ashley</h3>',
-    '<h3 class="btn btn-default btn-lg" role="button" data-city="parkCircle">Park Circle</h3>',
-    '<h3 class="btn btn-default btn-lg" role="button" data-city="follyBeach">Folly Beach</h3>',
-    '<h3 class="btn btn-default btn-lg" role="button" data-city="iop">Isle Of Palms</h3>',
-    '<h3 class="btn btn-default btn-lg" role="button" data-city="sullivans">Sullivans Island</h3>',
-    '<h3 class="btn btn-default btn-lg" role="button" data-city="summerville">Summerville</h3>',
-    '<h3 class="btn btn-default btn-lg" role="button" data-city="jamesIsland">James Island</h3>',
+  '<div class="citySearch" role="group" arial-label>',
+    '<div class="clicked" data-city="all">All</div>',
+    '<div data-city="downtown">Downtown</div>',
+    '<div data-city="mtPleasant">Mt. Pleasant</div>',
+    '<div data-city="westAshley">West Ashley</div>',
+    '<div data-city="parkCircle">Park Circle</div>',
+    '<div data-city="follyBeach">Folly Beach</div>',
+    '<div data-city="iop">Isle Of Palms</div>',
+    '<div data-city="sullivans">Sullivans Island</div>',
+    '<div data-city="summerville">Summerville</div>',
+    '<div data-city="jamesIsland">James Island</div>',
   '</div>'
 ].join(''),
 }
