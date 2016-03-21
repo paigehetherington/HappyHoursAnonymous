@@ -29,6 +29,9 @@ header h1 {
   margin-left: -53px;
   font-size: 3.2em; }
 
+.citySearch {
+  width: 100%; }
+
 .icon {
   overflow: hidden;
   border-radius: 3px;

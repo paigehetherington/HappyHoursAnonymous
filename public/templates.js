@@ -1,7 +1,7 @@
 module.exports = {
   post: [
-    '<div class=" post col-md-12">',
-    '<div class =" info col-md-6">',
+    '<div class="post col-xs-12">',
+    '<div class ="info col-xs-8">',
     '<h3><%= name %></h3>',
     '<h5><%= address %></h5>',
     '<h5><%= phone %></h5>',
@@ -27,10 +27,10 @@ module.exports = {
     '<span>Su </span>',
     '<% } %>',
     '</div>',
-    '<div class="icon col-md-6">',
+    '<div class="icon col-xs-4">',
     '<img class="iconImg" src="<%= image %>" alt="" />',
     '</div>',
-    '<div class="info col-md-12">',
+    '<div class="info col-xs-12">',
     '<p><%= startTime %> to <%= endTime %></p>',
     '<p><%= specials %></p>',
     '<button class="delete btn btn-default btn-sm" role="button"">DELETE</button>',
@@ -97,7 +97,7 @@ nameSearch: [
 
 // citySearch with bootsrtap included
 citySearch: [
-  '<div name ="citySearch id="citySearch" class="btn-group-vertical" role="group" arial-label>',
+  '<div class="citySearch btn-group-vertical" role="group" arial-label>',
     '<h3 class="btn btn-default btn-lg" role="button" data-city="downtown">Downtown</h3>',
     '<h3 class="btn btn-default btn-lg" role="button" data-city="mtPleasant">Mt. Pleasant</h3>',
     '<h3 class="btn btn-default btn-lg" role="button" data-city="westAshley">West Ashley</h3>',
