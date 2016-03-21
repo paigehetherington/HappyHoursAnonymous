@@ -5,67 +5,82 @@ $red: #EB9486;
 $black: #272838;
 $font: 'Fjalla One', sans-serif;
 
-* {
+body {
   color: $black;
   background-color: $white;
+
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  font-family: $font;
 }
-// .row {
-//   display: flex;
-//   flex-wrap: wrap;
-// }
 
 header {
   position: relative;
   background-image: url(https://drscdn.500px.org/photo/4116933/q%3D80_m%3D1500/54a28153694cbf949dc3d925e78c4ecc);
   background-repeat: no-repeat;
   background-size: cover;
-  width: 100%;
-  height: 350px;
+  height: 300px;
   background-position-y: -100px;
   padding-left: 0;
   padding-right: 0;
+  h1 {
+    color: $white;
+    background-color: transparent;
+    text-align: center;
+    margin: 0 auto;
+    margin-top: 72px;
+    font-size: 6.2em;
+  }
+  .blue {
+    background-color: $blueLight;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    padding-left: 0;
+    padding-right: 0;
+  }
 }
 
-.col-md-12 {
-  padding-left: 0;
-  padding-right: 0;
+section {
+  margin-top: 30px;
 }
 
-.blue {
-  background-color: $blueLight;
-  position: absolute;
+.citySearch {
   width: 100%;
-  height: 71%;
-  padding-left: 0;
-  padding-right: 0;
+  .clicked {
+    background-color: white;
+    border-right: 1px solid white;
+    margin-right: -1px;
+  }
+  div {
+    border: 1px solid #ccc;
+    border-bottom: none;
+    border-right: none;
+    border-radius: 3px;
+    padding: 5px 10px;
+  }
+  &:last-child {
+    border-bottom: 1px solid #ccc;
+  }
 }
-
-h1 {
-  color: $white;
-  background-color: transparent;
-  text-align: center;
-  margin: 0 auto;
-  margin-top: 72px;
-  font-size: 6.2em;
-  font-family: $font;
+.content {
+  background-color: white;
+  min-height: 800px;
+  border: 1px solid #ccc;
+  margin-left: -16px;
+  border-radius: 3px;
+  z-index: -1;
 }
-
-h3 {
-  font-family: $font;
-}
-
 .icon {
   overflow: hidden;
   border-radius: 3px;
   padding-left:0;
+  .iconImg {
+    height: 100px;
+  }
 }
 
-.iconImg {
-  height: 100px;
-}
 
 .post {
   border: 1px solid #ccc;
@@ -78,65 +93,14 @@ h3 {
   padding: 0;
   h3 {
     margin-top: 0;
-    font-family: $font;
   }
 }
-// .btn.btn-lg {
-//   border-radius: 10px !important;
-//   margin-bottom: 10px !important;
-// }
-//
-// .btn-default {
-//   background-color: $blue;
-//   color: $red;
-// }
-//
-// .btn-default:hover {
-//   background-color: $red;
-//   color: $blue;
-// }
-
-// .form-control {
-//   color: $white !important;
-// }
 
 label {
-  // color: $red;
   font-size: 1.2em;
-  font-family: $font;
 }
 
-input {
-  // margin-top: 8px;
-  // margin-bottom: 8px;
-  background-color: $white;
-  font-family: $font;
-  // border-radius: 10px;
-}
 
-// input[type="text"], textarea {
-//   color: $red;
-//   background-color : $blue;
-//   height: 50px;
-// }
-
-// ::-webkit-input-placeholder {
-//  font-size: 14px;
-//  color: $red !important;
-//  text-transform: uppercase;
-//  text-align: center;
-//  font-weight: bold;
-// }
-
-// button {
-//   color: $red;
-//   background-color: $blue;
-// }
-
-.col-sm-3 {
-  margin-top: -90px;
-}
-
-// .col-sm-6 {
+// .col-sm-3 {
 //   margin-top: -90px;
 // }

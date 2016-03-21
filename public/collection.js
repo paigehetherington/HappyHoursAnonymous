@@ -10,5 +10,8 @@ module.exports = Backbone.Collection.extend({
   },
   updateUrl: function (city) {
   this.url = "/happy_hour/city/" + city
+  },
+  allUrl: function () {
+    this.url = "/happy_hour";
   }
 })

@@ -10,16 +10,21 @@ module.exports = Backbone.View.extend ({
 
   template: _.template(tmpl.citySearch),
   events: {
-    'click h3': 'citySearch'
+    'click div': 'citySearch'
   },
   citySearch: function (event) {
+    $('div').removeClass('clicked');
+    $(event.target).addClass('clicked');
     event.preventDefault();
-    console.log($(event.target).data("city"));
-    var that = this
-    console.log(this);
     var city = $(event.target).data("city");
+    if (city === "all") {
+      console.log("ALL FIRED");
+      this.collection.allUrl();
+      this.collection.fetch();
+    } else {
     this.collection.updateUrl(city);
-    this.collection.fetch()
+    this.collection.fetch();
+    }
   },
   initialize: function () {
     this.listenTo(this.collection, 'update', this.addAll);
