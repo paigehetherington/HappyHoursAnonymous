@@ -30,7 +30,7 @@ import java.util.List;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = HappyHoursAnonymousApplication.class)
 @WebAppConfiguration
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+
 public class HappyHoursAnonymousApplicationTests {
 
 //	@Test
@@ -82,17 +82,19 @@ public class HappyHoursAnonymousApplicationTests {
 		Assert.assertTrue(happyHours.count() == 1);
 	}
 
-	@Test
-	public void testAa() throws Exception {
-		MvcResult result = mockMvc.perform(
-				MockMvcRequestBuilders.get("/happy_hour")
-		).andReturn();
-		MockHttpServletResponse response = result.getResponse();
-		String responseStr = response.getContentAsString();
-		ObjectMapper mapper = new ObjectMapper();
-		ArrayList responseArray = mapper.readValue(responseStr, ArrayList.class);
-		Assert.assertTrue(responseArray.size() > 0);
-	}
+
+////findAll GET
+//	@Test
+//	public void testAa() throws Exception {
+//		MvcResult result = mockMvc.perform(
+//				MockMvcRequestBuilders.get("/happy_hour")
+//		).andReturn();
+//		MockHttpServletResponse response = result.getResponse();
+//		String responseStr = response.getContentAsString();
+//		ObjectMapper mapper = new ObjectMapper();
+//		ArrayList responseArray = mapper.readValue(responseStr, ArrayList.class);
+//		Assert.assertTrue(responseArray.size() > 0);
+//	}
 
 
 
